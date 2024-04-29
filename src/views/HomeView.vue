@@ -1,18 +1,24 @@
 <template>
   <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <button>click me</button>
   </div>
 </template>
 
-<script>
-// @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
+<script setup>
+import { ref,  onMounted } from "vue";
 
-export default {
-  name: 'HomeView',
-  components: {
-    HelloWorld
-  }
+const pokemonsDeMierda = ref([]);
+
+const fetchPokemon = () => {
+  fetch('https://pokeapi.co/api/v2/pokemon?offset=0')
+    .then((res)=> res.json())
+    .then((data) => {
+      pokemonsDeMierda.value = data.results
+      console.log(pokemonsDeMierda.value)
+    })
 }
+
+onMounted(() => {
+  fetchPokemon()
+})
 </script>
